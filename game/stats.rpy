@@ -29,6 +29,13 @@ default goodwill = 50
 
 default merits = 10
 
+## House
+# defines which house player is in
+# house_color will change some ui elements based on the house the player chooses
+
+default house = "Unknown"
+default house_color = "#fff"
+
 ##
 ## Traits
 ##
@@ -64,59 +71,111 @@ default rose_text = "{color=#FFA5DF}{b}Rose{/b}{/color}"
 default violet_text = "{color=#5738C2}{b}Violet{/b}{/color}"
 default aurum_text = "{color=#FFCB65}{b}Aurum{/b}{/color}"
 
+## Pronouns
+##
+
+default pronouns = "they/their"
+
+init python:
+    class pronoun():
+        def __init__(self, neutral, masculine, feminine):
+            self.neutral = neutral
+            self.masculine = masculine
+            self.feminine = feminine
+        def __str__(self):
+            global pronouns
+            if pronouns == "she/her":
+                return self.feminine
+            elif pronouns == "he/him":
+                return self.masculine
+            elif pronouns == "they/them":
+                return self.neutral
+            else:
+                return self.neutral
+
+define they = pronoun("they", "he", "she")
+define them = pronoun("them", "him", "her")
+define their = pronoun("their", "his", "her")
+define attractive = pronoun("attractive", "handsome", "beautiful")
+define be = pronoun("are", "is", "is")
+
+define They = pronoun("They", "He", "She")
+define Them = pronoun("Them", "Him", "Her")
+define Their = pronoun("Their", "His", "Her")
+
+#############################################################################
+### FUNCTIONS ###############################################################
+#############################################################################
+
 init python:
 
     def change_scarlet(num):
         global scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum, force, judgement, mystique, artistry
         scarlet += num
         force += num
+        new_stat_values = (scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum)
+        stat_chart.values = new_stat_values
         return
 
     def change_cobalt(num):
         global scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum, force, judgement, mystique, artistry
         cobalt += num
         force += num
+        new_stat_values = (scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum)
+        stat_chart.values = new_stat_values
         return
 
     def change_obsidian(num):
         global scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum, force, judgement, mystique, artistry
         obsidian += num
         judgement += num
+        new_stat_values = (scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum)
+        stat_chart.values = new_stat_values
         return
 
     def change_argent(num):
         global scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum, force, judgement, mystique, artistry
         argent += num
         judgement += num
+        new_stat_values = (scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum)
+        stat_chart.values = new_stat_values
         return
 
     def change_viridian(num):
         global scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum, force, judgement, mystique, artistry
         viridian += num
         mystique += num
+        new_stat_values = (scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum)
+        stat_chart.values = new_stat_values
         return
 
     def change_rose(num):
         global scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum, force, judgement, mystique, artistry
         rose += num
         mystique += num
+        new_stat_values = (scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum)
+        stat_chart.values = new_stat_values
         return
 
     def change_violet(num):
         global scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum, force, judgement, mystique, artistry
         violet += num
         artistry += num
+        new_stat_values = (scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum)
+        stat_chart.values = new_stat_values
         return
 
     def change_aurum(num):
         global scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum, force, judgement, mystique, artistry
         aurum += num
         artistry += num
+        new_stat_values = (scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum)
+        stat_chart.values = new_stat_values
         return
 
-##
-## SCREENS #######################################################################
-##
+############################################################################
+## SCREENS #################################################################
+############################################################################
 
 ## Character Creator Screen
 
@@ -156,15 +215,18 @@ default firstname = "Jane"
 default lastname = "Doe"
 
 screen character_creator():
+    #DONE BOX
     frame:
         xalign 0.95
         yalign 0.95
         xpadding 10
         ypadding 10
-        
+
         vbox:
             textbutton "Done":
                 action Return()
+    
+    #NAME BOX
     frame:
         xalign .1
         yalign 0.02
@@ -193,9 +255,34 @@ screen character_creator():
                     style "input_button"
                     action input.enable
                     add input
-
+    
+    #PRONOUNS BOX
     frame:
-        xalign .1
+        xalign .5
+        yalign 0.02
+        xpadding 30
+        ypadding 30
+
+        hbox:
+            textbutton "He/Him":
+                action SetVariable("pronouns", "he/him")
+            textbutton "They/Them":
+                action SetVariable("pronouns", "they/them")
+            textbutton "She/Her":
+                action SetVariable("pronouns", "she/her")
+
+    #MAGIC FRAME
+    frame:
+        xalign .8
+        yalign .95
+        xpadding 30
+        ypadding 30
+
+        add "images/ui/astralis_logo.png" zoom 0.6
+
+    #BIG BOX
+    frame:
+        xalign .05
         yalign .9
         xpadding 30
         ypadding 30
@@ -429,7 +516,7 @@ screen character_creator():
 ## Player Stats UI 
 ###
 
-screen player_stats():
+screen player_menu_button():
     imagebutton:
         xalign 1.0
         yalign 0.0
@@ -437,59 +524,7 @@ screen player_stats():
         yoffset 30
         idle "gui/placeholder_stats.png"
         hover "gui/placeholder_stats_hover.png"
-        action ShowMenu("player_stats_ui")
-
-screen player_stats_ui():
-    frame:
-        xalign 0.01
-        yalign 0.95
-        xpadding 30
-        ypadding 30
-
-        hbox:
-            spacing 40
-
-            vbox:
-                spacing 10
-                text "Force" size 40
-                text "Scarlet" size 30
-                text "Cobalt" size 30
-
-                text "Judgement" size 40
-                text "Obsidian" size 30
-                text "Argent" size 30
-
-                text "Mystique" size 40
-                text "Viridian" size 30
-                text "Rose" size 30
-
-                text "Artistry" size 40
-                text "Violet" size 30
-                text "Aurum" size 30
-
-            vbox:
-                spacing 10
-                text "[force]" size 40
-                text "[scarlet]" size 30
-                text "[cobalt]" size 30
-
-                text "[judgement]" size 40
-                text "[obsidian]" size 30
-                text "[argent]" size 30
-
-                text "[mystique]" size 40
-                text "[viridian]" size 30
-                text "[rose]" size 30
-
-                text "[artistry]" size 40
-                text "[violet]" size 30
-                text "[aurum]" size 30
-    imagebutton:
-        xalign 1.0
-        yalign 0.0
-        xoffset -30
-        yoffset 30
-        idle "gui/placeholder_stats.png"
-        hover "gui/placeholder_stats_hover.png"
-        action Return()
-
+        action [ShowMenu(astralis_handbook.list_screen, astralis_handbook)]
+    
+    # textbutton "Open Handbook":
+        # action ShowMenu(astralis_handbook.list_screen, astralis_handbook)

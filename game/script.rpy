@@ -15,9 +15,35 @@ define right2 = Position(xalign=0.9, yalign=0)
 
 label start:
 
+    python:
+
+        stat_labels = [
+            Image("images/ui/ui_argentlinecolorsmall.png", zoom=0.25),
+            Image("images/ui/ui_argentlinecolorsmall.png", zoom=0.25),
+            Image("images/ui/ui_argentlinecolorsmall.png", zoom=0.25),
+            Image("images/ui/ui_argentlinecolorsmall.png", zoom=0.25),
+            Image("images/ui/ui_argentlinecolorsmall.png", zoom=0.25),
+            Image("images/ui/ui_argentlinecolorsmall.png", zoom=0.25),
+            Image("images/ui/ui_argentlinecolorsmall.png", zoom=0.25),
+            Image("images/ui/ui_argentlinecolorsmall.png", zoom=0.25),
+        ]
+
+        stat_values = (scarlet, cobalt, obsidian, argent, viridian, rose, violet, aurum)
+
+        stat_chart = RadarChart(
+            size=300,
+            values=stat_values,
+            max_value=100,
+            data_colour=house_color,
+            line_colour=(0, 0, 0, 255),
+            background_colour=(20, 21, 17, 170),
+            labels = stat_labels,
+            visible={"base":False},
+        )
+
     scene astralis_wide
 
-    show screen player_stats
+    show screen player_menu_button
 
     "Astralis Academy."
 
@@ -83,11 +109,11 @@ label start:
         $ change_violet(-3)
         $ change_aurum(-3)
 
-    if trait_homeland == 2:
+    if trait_origin == 2:
 
         "You're a prodigy."
 
-    if trait_homeland == 3:
+    if trait_origin == 3:
 
         "You're rich."
         $ change_scarlet(-3)
@@ -101,7 +127,7 @@ label start:
         $ merits += 100
         $ goodwill += 15
 
-    if trait_homeland == 4:
+    if trait_origin == 4:
 
         "You're poor."
         $ change_scarlet(-3)
@@ -159,6 +185,8 @@ label start:
     ###
 
     "Evaluated! Check your stats!"
+
+    "The player's pronouns are [they]/[them]. [They] [be] [attractive]."
 
     edd "My name is Eddy."
 

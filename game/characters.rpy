@@ -1,31 +1,29 @@
 # Declare characters used by this game.
 
-label character:
+#Romanceables
 
-    #Romanceables
+define edd = Character("Eddy", who_color="#FF2400")
+define fai = Character("Fai", who_color="#ADD8E6")
+define far = Character("Farlaine", who_color="#50C878")
+define mal = Character("Malachai", who_color="#C0C0C0")
+define mat = Character("Mathilde", who_color="#FFC0CB")
+define ina = Character("Ina", who_color="#1B1212")
+define tem = Character("Tempest", who_color="#8F00FF")
+define war = Character("Warden", who_color="#FFD700")
+define htw = Character("Heartwine", who_color="#1B1212")
+define iro = Character("Ironbottom", who_color="#ADD8E6")
 
-    define edd = Character("Eddy", who_color="#FF2400")
-    define fai = Character("Fai", who_color="#ADD8E6")
-    define far = Character("Farlaine", who_color="#50C878")
-    define mal = Character("Malachai", who_color="#C0C0C0")
-    define mat = Character("Mathilde", who_color="#FFC0CB")
-    define ina = Character("Ina", who_color="#1B1212")
-    define tem = Character("Tempest", who_color="#8F00FF")
-    define war = Character("Warden", who_color="#FFD700")
-    define htw = Character("Heartwine", who_color="#1B1212")
-    define iro = Character("Ironbottom", who_color="#ADD8E6")
+#Non-romanceables
 
-    #Non-romanceables
-
-    define nnk = Character("Nanook")
-    define mur = Character("Murcerios")
-    define cha = Character("Chambers", who_color="#50C878")
-    define lux = Character("Estellux", who_color ="#C0C0C0")
-    define gro = Character("Grognard", who_color="#FFC0CB")
-    define nym = Character("Nym", who_color="#FFD700")
-    define sim = Character("Simulera", who_color="#8F00FF")
-    define wic = Character("Wickle", who_color="#FF2400")
-    define mng = Character("Mingus")
+define nnk = Character("Nanook")
+define mur = Character("Murcerios")
+define cha = Character("Chambers", who_color="#50C878")
+define lux = Character("Estellux", who_color ="#C0C0C0")
+define gro = Character("Grognard", who_color="#FFC0CB")
+define nym = Character("Nym", who_color="#FFD700")
+define sim = Character("Simulera", who_color="#8F00FF")
+define wic = Character("Wickle", who_color="#FF2400")
+define mng = Character("Mingus")
 
 ## Character Relationships
 ###
